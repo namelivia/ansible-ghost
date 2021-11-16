@@ -41,11 +41,11 @@
       - name: "{{ docker_network_name }}"
     log_driver: "awslogs"
     log_options:
-        awslogs-region: "{{cloudwatch_region}}"
-        awslogs-group: "{{cloudwatch_log_group}}"
-        awslogs-stream: "{{ database_container_name }}"
+      awslogs-region: "{{ cloudwatch_region }}"
+      awslogs-group: "{{ cloudwatch_log_group }}"
+      awslogs-stream: "{{ database_container_name }}"
     volumes:
-        - ghost-database:/var/lib/mysql
+      - ghost-database:/var/lib/mysql
     env:
       MYSQL_ROOT_PASSWORD: "{{ mysql_root_password }}"
       MYSQL_DATABASE: "{{ database_name }}"
@@ -68,12 +68,12 @@
     networks:
       - name: "{{ docker_network_name }}"
     volumes:
-        - "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/content:/var/lib/ghost/content"
+      - "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/content:/var/lib/ghost/content"
     log_driver: "awslogs"
     log_options:
-        awslogs-region: "{{cloudwatch_region}}"
-        awslogs-group: "{{cloudwatch_log_group}}"
-        awslogs-stream: "{{ app_container_name }}"
+      awslogs-region: "{{ cloudwatch_region }}"
+      awslogs-group: "{{ cloudwatch_log_group }}"
+      awslogs-stream: "{{ app_container_name }}"
     env:
       VIRTUAL_HOST: "{{ domain_name }}"
       LETSENCRYPT_HOST: "{{ domain_name }}"
@@ -97,6 +97,7 @@
     name: namelivia.backups
     tasks_from: setup-file-backups
 
-- include_role:
+- name: Setup S3 backups
+  include_role:
     name: namelivia.backups
     tasks_from: setup-s3-backups
