@@ -11,7 +11,7 @@ collections:
   - community.docker
 
 roles:
-  - src: https://github.com/namelivia/namelivia.ghost
+  - src: https://github.com/namelivia/ansible-ghost
 ```
 
 ## Required variables (TODO: Update these)

@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: namelivia.ghost
+  role_name: ansible-ghost
   author: José Ignacio Amelivia Santiago <jignacio.amelivia@gmail.com>
   description: Ansible role I use to install and configure ghost
   license: GPLv2
