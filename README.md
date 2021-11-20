@@ -1,4 +1,4 @@
-# Ghost Ansible role
+# Ghost Ansible role [![Ansible Lint](https://github.com/namelivia/ansible-ghost/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/namelivia/ansible-ghost/actions/workflows/ansible-lint.yml)
 
 ## This is a WIP
 
