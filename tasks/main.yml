@@ -91,8 +91,8 @@
   include_role:
     name: ansible-backups
     tasks_from: setup-mariadb-database-backups
-    vars:
-      database_container_name: "{{ application_name }}-database"
+  vars:
+    database_container_name: "{{ application_name }}-database"
 
 - name: Setup file backups
   include_role:
