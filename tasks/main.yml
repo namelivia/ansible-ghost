@@ -4,9 +4,7 @@
     that:
       - application_name is defined
       - docker_network_name is defined
-      - app_container_name is defined
       - domain_name is defined
-      - database_container_name is defined
       - database_name is defined
       - database_user is defined
       - database_password is defined
@@ -32,7 +30,7 @@
 
 - name: Create database container
   docker_container:
-    name: "{{ database_container_name }}"
+    name: "{{ application_name }}-database"
     image: "mariadb:latest"
     restart_policy: "always"
     memory: "500MB"
@@ -44,7 +42,7 @@
     log_options:
       awslogs-region: "{{ cloudwatch_region }}"
       awslogs-group: "{{ cloudwatch_log_group }}"
-      awslogs-stream: "{{ database_container_name }}"
+      awslogs-stream: "{{ application_name }}-database"
     volumes:
       - ghost-database:/var/lib/mysql
     env:
@@ -61,7 +59,7 @@
 
 - name: Create app container
   docker_container:
-    name: "{{ app_container_name }}"
+    name: "{{ application_name }}-app"
     image: "ghost:4.4.0-alpine"
     restart_policy: "always"
     memory: "500MB"
@@ -75,7 +73,7 @@
     log_options:
       awslogs-region: "{{ cloudwatch_region }}"
       awslogs-group: "{{ cloudwatch_log_group }}"
-      awslogs-stream: "{{ app_container_name }}"
+      awslogs-stream: "{{ application_name }}-app"
     env:
       VIRTUAL_HOST: "{{ domain_name }}"
       LETSENCRYPT_HOST: "{{ domain_name }}"
@@ -83,7 +81,7 @@
       NODE_ENV: "production"
       url: "https://{{ domain_name }}"
       database__client: "mysql"
-      database__connection__host: "{{ database_container_name }}"
+      database__connection__host: "{{ application_name }}-database"
       database__connection__port: "3306"
       database__connection__database: "{{ database_name }}"
       database__connection__user: "{{ database_user }}"
@@ -93,6 +91,8 @@
   include_role:
     name: ansible-backups
     tasks_from: setup-mariadb-database-backups
+    vars:
+      database_container_name: "{{ application_name }}-database"
 
 - name: Setup file backups
   include_role:
