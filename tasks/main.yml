@@ -60,7 +60,7 @@
 - name: Create app container
   docker_container:
     name: "{{ application_name }}-app"
-    image: "ghost:4.22.4-alpine"
+    image: "ghost:4.25.0-alpine"
     restart_policy: "always"
     memory: "500MB"
     exposed_ports:
