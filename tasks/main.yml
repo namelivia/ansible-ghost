@@ -34,6 +34,7 @@
     image: "mariadb:latest"
     restart_policy: "always"
     memory: "500MB"
+    cleanup: true
     exposed_ports:
       - "3306"
     networks:
@@ -62,6 +63,7 @@
     name: "{{ application_name }}-app"
     image: "ghost:4.27.2-alpine"
     restart_policy: "always"
+    cleanup: true
     memory: "500MB"
     exposed_ports:
       - "2368"
