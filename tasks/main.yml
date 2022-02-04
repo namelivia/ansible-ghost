@@ -61,7 +61,7 @@
 - name: Create app container
   docker_container:
     name: "{{ application_name }}-app"
-    image: "ghost:4.43.3-alpine"
+    image: "ghost:4.34.3-alpine"
     restart_policy: "always"
     cleanup: true
     memory: "500MB"
