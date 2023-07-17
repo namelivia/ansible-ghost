@@ -8,8 +8,7 @@
       - database_name is defined
       - database_user is defined
       - database_password is defined
-      - cloudwatch_region is defined
-      - cloudwatch_log_group is defined
+      - loki_url is defined
       - dump_day is defined
       - backup_day is defined
       - mysql_root_password is defined
@@ -39,11 +38,10 @@
       - "3306"
     networks:
       - name: "{{ docker_network_name }}"
-    log_driver: "awslogs"
+    log_driver: "loki"
     log_options:
-      awslogs-region: "{{ cloudwatch_region }}"
-      awslogs-group: "{{ cloudwatch_log_group }}"
-      awslogs-stream: "{{ application_name }}-database"
+      loki-url: "{{ loki_url }}"
+      loki-batch-size: "400"
     volumes:
       - ghost-database:/var/lib/mysql
     env:
@@ -71,11 +69,10 @@
       - name: "{{ docker_network_name }}"
     volumes:
       - "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/content:/var/lib/ghost/content"
-    log_driver: "awslogs"
+    log_driver: "loki"
     log_options:
-      awslogs-region: "{{ cloudwatch_region }}"
-      awslogs-group: "{{ cloudwatch_log_group }}"
-      awslogs-stream: "{{ application_name }}-app"
+      loki-url: "{{ loki_url }}"
+      loki-batch-size: "400"
     env:
       VIRTUAL_HOST: "{{ domain_name }}"
       LETSENCRYPT_HOST: "{{ domain_name }}"
