@@ -59,7 +59,7 @@
 - name: Create app container
   docker_container:
     name: "{{ application_name }}-app"
-    image: "ghost:5.53.1-alpine"
+    image: "ghost:5.55.2-alpine"
     restart_policy: "always"
     cleanup: true
     memory: "500MB"
@@ -105,5 +105,5 @@
     tasks_from: setup-s3-backups
 
 - name: Restart proxy
-  shell: 
+  shell:
     cmd: docker restart proxy
