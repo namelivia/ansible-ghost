@@ -86,6 +86,7 @@
       database__connection__database: "{{ database_name }}"
       database__connection__user: "{{ database_user }}"
       database__connection__password: "{{ database_password }}"
+      logging__slowHelper__threshold: "700"
 
 - name: Setup database backups
   include_role:
