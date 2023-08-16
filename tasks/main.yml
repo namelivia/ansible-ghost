@@ -74,7 +74,8 @@
     log_options:
       loki-url: "{{ loki_url }}"
       loki-batch-size: "400"
-      loki-pipeline-stages: "- multiline:\n    firstline: '^\[\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\]'\n"
+      loki-pipeline-stages: "- multiline:\n    firstline: '^\\\\[\\\\d{4}-\\\\d{2}-\\\\d{2} \\\\d{2}:\\\\d{2}:\\\\d{2}]'\n"
+
 
     env:
       VIRTUAL_HOST: "{{ domain_name }}"
