@@ -21,7 +21,7 @@
   file:
     path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files"
     state: directory
-    mode: 0775
+    mode: "0775"
 
 - name: Create the ghost data volumne
   docker_volume:
@@ -54,7 +54,7 @@
   file:
     path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files/content"
     state: directory
-    mode: 0775
+    mode: "0775"
 
 - name: Create app container
   docker_container:
@@ -106,6 +106,20 @@
   include_role:
     name: ansible-backups
     tasks_from: setup-s3-backups
+
+- name: Setup restic file backups
+  include_role:
+    name: ansible-backups
+    tasks_from: setup-restic-backups
+  vars:
+    file_path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/files"
+
+- name: Setup restic database backups
+  include_role:
+    name: ansible-backups
+    tasks_from: setup-restic-backups
+  vars:
+    file_path: "/var/lib/docker/volumes/ghost-database"
 
 - name: Restart proxy
   shell:
